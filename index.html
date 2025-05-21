@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <meta charset="UTF-8">
+  <title>Network Protocols Reference</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    #search, label[for="search"] {
+  display: none;
+}
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    #sortByBtn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
+}
+
+#sortByBtn:hover {
+  background-color: #0056b3;
+}
+
+#topBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#topBtn:hover {
+  background-color: #0056b3;
+}
+
+#courseList {
+  margin-top: 20px;
+  display: none;
+}
+
+#courseList ul li {
+  margin: 10px 0;
+}
+
+#courseList a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+#courseList a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+#courseList a::before {
+  content: "📄 ";
+}
+
+    .controls {
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    label {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    
+    select, input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .protocol-card {
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .protocol-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .protocol-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .protocol-abbr {
+      font-size: 24px;
+      font-weight: bold;
+      color: #3498db;
+    }
+    
+    .protocol-port {
+      background: #e74c3c;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    
+    .protocol-type {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #f1c40f;
+      color: #2c3e50;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    
+    .protocol-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 10px 0;
+      color: #2c3e50;
+    }
+    
+    .protocol-desc {
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+    #nameAndIcons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#myName {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.social-icon {
+  font-size: 20px;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #0056b3;
+}
+
+    .stats {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+    
+    @media (max-width: 768px) {
+      .controls {
+        flex-direction: column;
+      }
+      
+      .protocol-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- 👤 Nom + Réseaux Sociaux -->
+<div id="nameAndIcons">
+  <span id="myName">Tarik Merras</span>
+  <a class="social-icon" href="https://wa.me/212693044430" target="_blank" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a class="social-icon" href="https://www.linkedin.com/in/merras-tarik-b84732315?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+</div>
+
+  <h1>📡 Network Protocols Reference</h1>
+   <div style="text-align:center; margin: 20px 0;">
+  <button id="topBtn" title="Afficher les cours">📘</button>
+  <button id="sortByBtn">📘 Afficher les Cours</button>
+
+  <div id="courseList">
+    <ul style="list-style: none; padding: 0;">
+      <li><a href="https://github.com/tarikmr/IDOSR/raw/c25dfef750a8f74bf5bb07cd02a56becb7ae3645/DOC-20250503-WA0056..pdf" download> - RESUME DE COURS
+FILIÈRE SYSTÈMES ET RÉSEAUX</a></li>
+      <li><a href="https://github.com/tarikmr/IDOSR/blob/fea3ec90b688b17cb71db2d7653cac946b72b4f5/101%20Linux%20commands%20PDF%20(1).pdf" download> - 101 Linux commands </a></li>
+      <li><a href="https://github.com/tarikmr/IDOSR/blob/4a604279a02a739721439d93ac7fbb9dfb380e8c/Resume_Serveur_Linux.pdf" download> - Resume_Serveur_Linux</a></li>
+	  <li><a href="https://github.com/tarikmr/IDOSR/blob/b68a7c25468d02ca0d7c7d53e5223d263af43349/r%C3%A9sumer%20linux%20idosr.pdf" download> - résumer linux idosr</a></li>
+	  <li><a href="https://github.com/tarikmr/IDOSR/blob/9eac5d38b717e4a0230ac33ce3e549e8f42411fc/Notion%20de%20base%20sur%20Active%20Direcory.pdf" download> - Notion de base sur Active Direcory</a></li>
+	  <li><a href="https://github.com/tarikmr/IDOSR/blob/9eac5d38b717e4a0230ac33ce3e549e8f42411fc/r%C3%A9sumer%20windows%20pratique%20idosr.pdf" download> - résumer windows pratique idosr</a></li>
+	  <li><a href="https://github.com/tarikmr/IDOSR/blob/9eac5d38b717e4a0230ac33ce3e549e8f42411fc/r%C3%A9sumer%20module%20r%C3%A9seau%20IDOSR.pdf" download> - résumer module réseau IDOSR</a></li>
+	  <li><a href="https://github.com/tarikmr/IDOSR/blob/9eac5d38b717e4a0230ac33ce3e549e8f42411fc/programme-de-formation-infrastructure-digitale-systemes-et-reseaux.pdf" download> - programme-de-formation-infrastructure-digitale-systemes-et-reseaux</a></li>
+
+    </ul>
+  </div>
+</div>
+<script>
+  const topBtn = document.getElementById('topBtn');
+  const sortBtn = document.getElementById('sortByBtn');
+  const courseList = document.getElementById('courseList');
+
+  function toggleCourseList() {
+    if (courseList.style.display === 'none' || courseList.style.display === '') {
+      courseList.style.display = 'block';
+    } else {
+      courseList.style.display = 'none';
+    }
+  }
+
+  topBtn.addEventListener('click', () => {
+    toggleCourseList();
+    if (courseList.style.display === 'block') {
+      courseList.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  sortBtn.addEventListener('click', () => {
+    toggleCourseList();
+  });
+</script>
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="lang">🌐 Language:</label>
+      <select id="lang">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+    
+    <div class="control-group">
+      <label for="search">🔍 Search:</label>
+      <input type="text" id="search" placeholder="Protocol, port or description">
+    </div>
+    
+    <div class="control-group">
+      <label for="filter">Filter:</label>
+      <select id="filter">
+        <option value="all">All Protocols</option>
+        <option value="TCP">TCP</option>
+        <option value="UDP">UDP</option>
+        <option value="ICMP">ICMP</option>
+        <option value="Security">Security</option>
+        <option value="Routing">Routing</option>
+        <option value="Wireless">Wireless</option>
+      </select>
+    </div>
+    
+    <div class="control-group">
+      <label for="sort">Sort by:</label>
+      <select id="sort">
+        <option value="name-asc">Name (A-Z)</option>
+        <option value="name-desc">Name (Z-A)</option>
+        <option value="port-asc">Port (Low-High)</option>
+        <option value="port-desc">Port (High-Low)</option>
+      </select>
+    </div>
+  </div>
+ 
+  <div class="stats" id="count"></div>
+  
+  <div class="protocol-grid" id="protocolGrid"></div>
+
+  <script>
+    // Protocol data - cleaned and deduplicated
+    const protocols = [
+      {
+        abbr: "HTTP",
+        port: 80,
+        type: "TCP",
+        name: {
+          en: "HyperText Transfer Protocol",
+          fr: "Protocole de transfert hypertexte",
+          ar: "بروتوكول نقل النص الفائق"
+        },
+        desc: {
+          en: "Foundation of data communication for the World Wide Web.",
+          fr: "Fondement de la communication de données pour le World Wide Web.",
+          ar: "أساس اتصال البيانات لشبكة الويب العالمية."
+        }
+      },
+	  {
+  "abbr": "ICMPv6",
+  "port": "N/A",
+  "type": "ICMP",
+  "name": {
+    "en": "Internet Control Message Protocol version 6",
+    "fr": "Protocole de messages de contrôle Internet version 6",
+    "ar": "بروتوكول رسائل التحكم في الإنترنت الإصدار 6"
+  },
+  "desc": {
+    "en": "Protocol used in IPv6 networks for error reporting and diagnostics.",
+    "fr": "Protocole utilisé dans les réseaux IPv6 pour le reporting d'erreurs et le diagnostic.",
+    "ar": "بروتوكول يستخدم في شبكات IPv6 للإبلاغ عن الأخطاء والتشخيص."
+  }
+},
+{
+  "abbr": "SIP-TLS",
+  "port": 5061,
+  "type": "TCP",
+  "name": {
+    "en": "Session Initiation Protocol over TLS",
+    "fr": "Protocole d'initiation de session sur TLS",
+    "ar": "بروتوكول بدء الجلسة عبر TLS"
+  },
+  "desc": {
+    "en": "Secure version of SIP using TLS encryption for signaling multimedia communication sessions.",
+    "fr": "Version sécurisée de SIP utilisant le chiffrement TLS pour la signalisation des sessions multimédias.",
+    "ar": "نسخة آمنة من SIP تستخدم تشفير TLS لإشارات جلسات الاتصالات متعددة الوسائط."
+  }
+},
+{
+  "abbr": "WireGuard",
+  "port": 51820,
+  "type": "UDP",
+  "name": {
+    "en": "WireGuard VPN",
+    "fr": "VPN WireGuard",
+    "ar": "شبكة VPN WireGuard"
+  },
+  "desc": {
+    "en": "Modern, simple, and fast VPN protocol using state-of-the-art cryptography.",
+    "fr": "Protocole VPN moderne, simple et rapide utilisant une cryptographie de pointe.",
+    "ar": "بروتوكول VPN حديث وبسيط وسريع يستخدم التشفير المتطور."
+  }
+},
+{
+    "abbr": "MPLS-TE",
+    "port": "N/A",
+    "type": "MPLS",
+    "name": {
+      "en": "Multiprotocol Label Switching - Traffic Engineering",
+      "fr": "Multiprotocol Label Switching - Ingénierie du trafic",
+      "ar": "تبديل التسميات متعدد البروتوكولات - هندسة المرور"
+    },
+    "desc": {
+      "en": "Extension of MPLS that provides traffic engineering capabilities for optimized network resource usage.",
+      "fr": "Extension de MPLS offrant des capacités d'ingénierie du trafic pour une utilisation optimisée des ressources réseau.",
+      "ar": "امتداد لبروتوكول MPLS يوفر قدرات هندسة المرور لاستخدام موارد الشبكة بشكل أمثل."
+    }
+  },
+  {
+    "abbr": "Zeroconf",
+    "port": "N/A",
+    "type": "Network Discovery",
+    "name": {
+      "en": "Zero Configuration Networking",
+      "fr": "Réseau sans configuration",
+      "ar": "شبكات بدون إعداد"
+    },
+    "desc": {
+      "en": "Protocols (including mDNS and DNS-SD) that allow devices to discover each other automatically without manual configuration.",
+      "fr": "Protocoles (dont mDNS et DNS-SD) permettant aux appareils de se découvrir automatiquement sans configuration manuelle.",
+      "ar": "بروتوكولات (بما في ذلك mDNS و DNS-SD) تسمح للأجهزة باكتشاف بعضها البعض تلقائياً بدون إعداد يدوي."
+    }
+  },
+  {
+    "abbr": "RTP",
+    "port": 5004,
+    "type": "UDP",
+    "name": {
+      "en": "Real-time Transport Protocol",
+      "fr": "Protocole de transport en temps réel",
+      "ar": "بروتوكول النقل في الوقت الحقيقي"
+    },
+    "desc": {
+      "en": "Protocol for delivering audio and video over IP networks, widely used in VoIP and streaming.",
+      "fr": "Protocole pour la livraison audio et vidéo sur les réseaux IP, largement utilisé dans la VoIP et le streaming.",
+      "ar": "بروتوكول لتوصيل الصوت والفيديو عبر شبكات IP، يُستخدم بشكل واسع في VoIP والبث."
+    }
+  },
+  {
+    "abbr": "WebSocket",
+    "port": 80,
+    "type": "TCP",
+    "name": {
+      "en": "WebSocket Protocol",
+      "fr": "Protocole WebSocket",
+      "ar": "بروتوكول WebSocket"
+    },
+    "desc": {
+      "en": "Protocol enabling real-time, full-duplex communication between client and server over a single TCP connection.",
+      "fr": "Protocole permettant une communication en temps réel et duplex intégral entre client et serveur sur une seule connexion TCP.",
+      "ar": "بروتوكول يتيح اتصالًا فوريًا ثنائي الاتجاه بين العميل والخادم عبر اتصال TCP واحد."
+    }
+  },
+  {
+    "abbr": "BFD",
+    "port": "N/A",
+    "type": "Routing",
+    "name": {
+      "en": "Bidirectional Forwarding Detection",
+      "fr": "Détection de transmission bidirectionnelle",
+      "ar": "كشف التوجيه ثنائي الاتجاه"
+    },
+    "desc": {
+      "en": "Protocol for rapid detection of link failures in routing networks.",
+      "fr": "Protocole pour la détection rapide des défaillances de lien dans les réseaux de routage.",
+      "ar": "بروتوكول للكشف السريع عن فشل الروابط في شبكات التوجيه."
+    }
+  },
+  {
+    "abbr": "LISP",
+    "port": "N/A",
+    "type": "Routing",
+    "name": {
+      "en": "Locator/ID Separation Protocol",
+      "fr": "Protocole de séparation d’identificateur et de localisateur",
+      "ar": "بروتوكول فصل المعرف والموقع"
+    },
+    "desc": {
+      "en": "Protocol that separates device identity from location to improve routing scalability and flexibility.",
+      "fr": "Protocole qui sépare l’identité de l’appareil de son emplacement pour améliorer l’évolutivité et la flexibilité du routage.",
+      "ar": "بروتوكول يفصل هوية الجهاز عن الموقع لتحسين قابلية التوسع والمرونة في التوجيه."
+    }
+  },
+  {
+    "abbr": "HTTP/3",
+    "port": 443,
+    "type": "UDP",
+    "name": {
+      "en": "HyperText Transfer Protocol Version 3",
+      "fr": "Protocole de transfert hypertexte version 3",
+      "ar": "بروتوكول نقل النص الفائق الإصدار 3"
+    },
+    "desc": {
+      "en": "Modern version of HTTP based on QUIC for improved performance and reduced latency.",
+      "fr": "Version moderne de HTTP basée sur QUIC pour une meilleure performance et une latence réduite.",
+      "ar": "نسخة حديثة من HTTP تعتمد على QUIC لتحسين الأداء وتقليل الكمون."
+    }
+  },
+  {
+    "abbr": "NFSv4",
+    "port": 2049,
+    "type": "TCP/UDP",
+    "name": {
+      "en": "Network File System version 4",
+      "fr": "Système de fichiers réseau version 4",
+      "ar": "نظام الملفات الشبكي الإصدار 4"
+    },
+    "desc": {
+      "en": "Modern version of NFS supporting stateful operations and better security.",
+      "fr": "Version moderne de NFS supportant des opérations avec état et une meilleure sécurité.",
+      "ar": "نسخة حديثة من NFS تدعم العمليات ذات الحالة وأمانًا أفضل."
+    }
+  },
+  {
+    "abbr": "ISAKMP/IKE",
+    "port": 500,
+    "type": "UDP",
+    "name": {
+      "en": "Internet Security Association and Key Management Protocol / Internet Key Exchange",
+      "fr": "Protocole de gestion des associations de sécurité et d’échange de clés Internet",
+      "ar": "بروتوكول إدارة علاقات الأمان وتبادل المفاتيح للإنترنت"
+    },
+    "desc": {
+      "en": "Protocols used for establishing and managing security associations and cryptographic keys in IPsec VPNs.",
+      "fr": "Protocoles utilisés pour établir et gérer les associations de sécurité et les clés cryptographiques dans les VPN IPsec.",
+      "ar": "بروتوكولات تُستخدم لإنشاء وإدارة علاقات الأمان ومفاتيح التشفير في شبكات VPN الخاصة بـ IPsec."
+    }
+  },
+{
+    "abbr": "SCTP",
+    "port": 132,
+    "type": "TCP/UDP",
+    "name": {
+      "en": "Stream Control Transmission Protocol",
+      "fr": "Protocole de transmission de contrôle de flux",
+      "ar": "بروتوكول التحكم في تدفق النقل"
+    },
+    "desc": {
+      "en": "Transport layer protocol designed for message-oriented communication with multi-streaming and multi-homing support.",
+      "fr": "Protocole de couche transport conçu pour la communication orientée message avec prise en charge du multi-flux et du multi-hébergement.",
+      "ar": "بروتوكول طبقة النقل مصمم للاتصال الموجه للرسائل مع دعم متعدد التدفقات ومتعدد المضيفين."
+    }
+  },
+  {
+    "abbr": "QUIC",
+    "port": 443,
+    "type": "UDP",
+    "name": {
+      "en": "Quick UDP Internet Connections",
+      "fr": "Connexions Internet UDP rapides",
+      "ar": "اتصالات الإنترنت السريعة عبر UDP"
+    },
+    "desc": {
+      "en": "Transport protocol developed by Google to improve performance of connection-oriented web applications, based on UDP with encryption and multiplexing.",
+      "fr": "Protocole de transport développé par Google pour améliorer les performances des applications web orientées connexion, basé sur UDP avec chiffrement et multiplexage.",
+      "ar": "بروتوكول نقل طورته جوجل لتحسين أداء تطبيقات الويب المعتمدة على الاتصال، يعتمد على UDP مع التشفير والتعدد."
+    }
+  },
+  
+ 
+  {
+    "abbr": "CoAP",
+    "port": 5683,
+    "type": "UDP",
+    "name": {
+      "en": "Constrained Application Protocol",
+      "fr": "Protocole d'application contraint",
+      "ar": "بروتوكول التطبيقات المقيدة"
+    },
+    "desc": {
+      "en": "Specialized web transfer protocol for use with constrained nodes and networks in IoT environments.",
+      "fr": "Protocole de transfert web spécialisé pour une utilisation avec des nœuds et réseaux contraints dans les environnements IoT.",
+      "ar": "بروتوكول نقل ويب متخصص للاستخدام مع العقد والشبكات المقيدة في بيئات إنترنت الأشياء."
+    }
+  },
+  {
+    "abbr": "DCCP",
+    "port": "N/A",
+    "type": "UDP",
+    "name": {
+      "en": "Datagram Congestion Control Protocol",
+      "fr": "Protocole de contrôle de congestion des datagrammes",
+      "ar": "بروتوكول التحكم في ازدحام الرزم"
+    },
+    "desc": {
+      "en": "Transport protocol providing congestion control for unreliable datagram flows.",
+      "fr": "Protocole de transport fournissant un contrôle de congestion pour les flux de datagrammes non fiables.",
+      "ar": "بروتوكول نقل يوفر التحكم في الازدحام لتدفقات الرزم غير الموثوقة."
+    }
+  },
+  {
+    "abbr": "SAML",
+    "port": "N/A",
+    "type": "Authentication",
+    "name": {
+      "en": "Security Assertion Markup Language",
+      "fr": "Langage de balisage pour l'assertion de sécurité",
+      "ar": "لغة توصيف تأكيد الأمان"
+    },
+    "desc": {
+      "en": "XML-based framework for exchanging authentication and authorization data between parties.",
+      "fr": "Cadre basé sur XML pour l’échange de données d’authentification et d’autorisation entre parties.",
+      "ar": "إطار عمل يعتمد على XML لتبادل بيانات المصادقة والتفويض بين الأطراف."
+    }
+  },
+  {
+    "abbr": "OAuth",
+    "port": "N/A",
+    "type": "Authentication/Authorization",
+    "name": {
+      "en": "OAuth",
+      "fr": "OAuth",
+      "ar": "أوث"
+    },
+    "desc": {
+      "en": "Open standard for access delegation commonly used as a way for Internet users to grant websites or applications access to their information.",
+      "fr": "Standard ouvert pour la délégation d’accès couramment utilisé pour permettre aux utilisateurs d’Internet d’accorder l’accès à leurs informations à des sites web ou applications.",
+      "ar": "معيار مفتوح لتفويض الوصول يستخدم عادة للسماح لمستخدمي الإنترنت بمنح المواقع أو التطبيقات حق الوصول إلى معلوماتهم."
+    }
+  },
+  {
+    "abbr": "QUICv2",
+    "port": 7844,
+    "type": "UDP",
+    "name": {
+      "en": "Quick UDP Internet Connections Version 2",
+      "fr": "Connexions Internet UDP rapides version 2",
+      "ar": "اتصالات UDP السريعة للإنترنت الإصدار 2"
+    },
+    "desc": {
+      "en": "Next-generation transport protocol improving QUIC with better congestion control and security.",
+      "fr": "Protocole de transport nouvelle génération améliorant QUIC avec un meilleur contrôle de congestion et sécurité.",
+      "ar": "بروتوكول نقل من الجيل التالي يحسن QUIC بتحكم أفضل في الازدحام والأمان."
+    }
+  },
+  {
+    "abbr": "Zigbee Green Power",
+    "port": "N/A",
+    "type": "Wireless",
+    "name": {
+      "en": "Zigbee Green Power",
+      "fr": "Zigbee énergie verte",
+      "ar": "زيجبي الطاقة الخضراء"
+    },
+    "desc": {
+      "en": "Energy-efficient extension of Zigbee for battery-less devices.",
+      "fr": "Extension économe en énergie de Zigbee pour les dispositifs sans batterie.",
+      "ar": "امتداد فعال للطاقة لزيجبي لأجهزة بدون بطاريات."
+    }
+  },
+  {
+    "abbr": "Teredo",
+    "port": 3544,
+    "type": "UDP",
+    "name": {
+      "en": "Teredo Tunneling Protocol",
+      "fr": "Protocole de tunnel Teredo",
+      "ar": "بروتوكول نفق تيريدو"
+    },
+    "desc": {
+      "en": "IPv6 transition technology allowing IPv6 connectivity over IPv4 networks using UDP tunneling.",
+      "fr": "Technologie de transition IPv6 permettant la connectivité IPv6 sur réseaux IPv4 via tunnel UDP.",
+      "ar": "تقنية انتقال IPv6 تسمح باتصال IPv6 عبر شبكات IPv4 باستخدام نفق UDP."
+    }
+  },
+  {
+    "abbr": "Multipath TCP",
+    "port": "N/A",
+    "type": "Transport",
+    "name": {
+      "en": "Multipath TCP",
+      "fr": "TCP multipath",
+      "ar": "TCP متعدد المسارات"
+    },
+    "desc": {
+      "en": "Extension of TCP that allows multiple paths for a single TCP connection, improving redundancy and throughput.",
+      "fr": "Extension de TCP permettant plusieurs chemins pour une connexion TCP unique, améliorant redondance et débit.",
+      "ar": "امتداد لـ TCP يسمح بعدة مسارات لاتصال TCP واحد، يعزز التكرار والنقل."
+    }
+  },
+  {
+    "abbr": "SCTP",
+    "port": 9899,
+    "type": "TCP/UDP",
+    "name": {
+      "en": "Stream Control Transmission Protocol",
+      "fr": "Protocole de contrôle de flux",
+      "ar": "بروتوكول التحكم في تدفق البيانات"
+    },
+    "desc": {
+      "en": "Reliable transport protocol with multi-streaming and multi-homing support, mainly used in telecom signaling.",
+      "fr": "Protocole de transport fiable avec support multi-flux et multi-homing, utilisé surtout en télécom.",
+      "ar": "بروتوكول نقل موثوق يدعم تعدد التدفقات وتعدد العناوين، يستخدم أساساً في شبكات الاتصالات."
+    }
+  },
+  {
+    "abbr": "OpenID Connect",
+    "port": "N/A",
+    "type": "Authentication",
+    "name": {
+      "en": "OpenID Connect",
+      "fr": "OpenID Connect",
+      "ar": "OpenID Connect"
+    },
+    "desc": {
+      "en": "Authentication layer built on top of OAuth 2.0 allowing clients to verify user identity.",
+      "fr": "Couche d’authentification construite sur OAuth 2.0 permettant aux clients de vérifier l’identité des utilisateurs.",
+      "ar": "طبقة مصادقة مبنية على OAuth 2.0 تسمح للعملاء بالتحقق من هوية المستخدم."
+    }
+  },
+
+      {
+        abbr: "HTTPS",
+        port: 443,
+        type: "TCP",
+        name: {
+          en: "HTTP Secure",
+          fr: "HTTP Sécurisé",
+          ar: "بروتوكول نقل النص التشعبي الآمن"
+        },
+        desc: {
+          en: "Secure version of HTTP using SSL/TLS encryption.",
+          fr: "Version sécurisée de HTTP utilisant le chiffrement SSL/TLS.",
+          ar: "إصدار آمن من HTTP يستخدم تشفير SSL/TLS."
+        }
+      },
+      {
+        abbr: "DNS",
+        port: 53,
+        type: "UDP",
+        name: {
+          en: "Domain Name System",
+          fr: "Système de noms de domaine",
+          ar: "نظام اسم النطاق"
+        },
+        desc: {
+          en: "Translates domain names to IP addresses.",
+          fr: "Traduit les noms de domaine en adresses IP.",
+          ar: "يترجم أسماء النطاقات إلى عناوين IP."
+        }
+      },
+      {
+        abbr: "SSH",
+        port: 22,
+        type: "TCP",
+        name: {
+          en: "Secure Shell",
+          fr: "Coquille sécurisée",
+          ar: "الصدفة الآمنة"
+        },
+        desc: {
+          en: "Encrypted protocol for secure remote login and command execution.",
+          fr: "Protocole chiffré pour la connexion à distance sécurisée et l'exécution de commandes.",
+          ar: "بروتوكول مشفر لتسجيل الدخول الآمن عن بعد وتنفيذ الأوامر."
+        }
+      },
+	  
+	  {
+    abbr: "SMTP",
+    port: 25,
+    type: "TCP",
+    name: {
+      en: "Simple Mail Transfer Protocol",
+      fr: "Protocole simple de transfert de courrier",
+      ar: "بروتوكول نقل البريد البسيط"
+    },
+    desc: {
+      en: "Used for sending emails.",
+      fr: "Utilisé pour l'envoi d'emails.",
+      ar: "يُستخدم لإرسال البريد الإلكتروني."
+    }
+  },
+  {
+    abbr: "POP3",
+    port: 110,
+    type: "TCP",
+    name: {
+      en: "Post Office Protocol v3",
+      fr: "Protocole de bureau de poste v3",
+      ar: "بروتوكول مكتب البريد الإصدار 3"
+    },
+    desc: {
+      en: "Used for retrieving emails.",
+      fr: "Utilisé pour récupérer les emails.",
+      ar: "يُستخدم لاسترجاع البريد الإلكتروني."
+    }
+  },
+  {
+    abbr: "IMAP",
+    port: 143,
+    type: "TCP",
+    name: {
+      en: "Internet Message Access Protocol",
+      fr: "Protocole d'accès aux messages Internet",
+      ar: "بروتوكول الوصول إلى رسائل الإنترنت"
+    },
+    desc: {
+      en: "Used for accessing emails.",
+      fr: "Utilisé pour accéder aux emails.",
+      ar: "يُستخدم للوصول إلى البريد الإلكتروني."
+    }
+  },
+  {
+    abbr: "Telnet",
+    port: 23,
+    type: "TCP",
+    name: {
+      en: "Telnet Protocol",
+      fr: "Protocole Telnet",
+      ar: "بروتوكول تيلنت"
+    },
+    desc: {
+      en: "Used for remote command line access (not secure).",
+      fr: "Utilisé pour un accès distant en ligne de commande (non sécurisé).",
+      ar: "يُستخدم للوصول عن بعد لسطر الأوامر (غير آمن)."
+    }
+  },
+  {
+    abbr: "TFTP",
+    port: 69,
+    type: "UDP",
+    name: {
+      en: "Trivial File Transfer Protocol",
+      fr: "Protocole de transfert de fichiers trivial",
+      ar: "بروتوكول نقل الملفات البسيط"
+    },
+    desc: {
+      en: "Used for simple file transfers.",
+      fr: "Utilisé pour des transferts de fichiers simples.",
+      ar: "يُستخدم لنقل الملفات البسيط."
+    }
+  },
+  {
+    abbr: "NTP",
+    port: 123,
+    type: "UDP",
+    name: {
+      en: "Network Time Protocol",
+      fr: "Protocole de temps réseau",
+      ar: "بروتوكول وقت الشبكة"
+    },
+    desc: {
+      en: "Used for clock synchronization.",
+      fr: "Utilisé pour la synchronisation de l'horloge.",
+      ar: "يُستخدم لمزامنة الوقت."
+    }
+  },
+  {
+    abbr: "SNMP",
+    port: 161,
+    type: "UDP",
+    name: {
+      en: "Simple Network Management Protocol",
+      fr: "Protocole simple de gestion de réseau",
+      ar: "بروتوكول إدارة الشبكة البسيط"
+    },
+    desc: {
+      en: "Used for network management.",
+      fr: "Utilisé pour la gestion du réseau.",
+      ar: "يُستخدم لإدارة الشبكة."
+    }
+  },
+  {
+    abbr: "ICMP",
+    port: 0,
+    type: "ICMP",
+    name: {
+      en: "Internet Control Message Protocol",
+      fr: "Protocole de message de contrôle Internet",
+      ar: "بروتوكول رسائل التحكم بالإنترنت"
+    },
+    desc: {
+      en: "Used for network diagnostics and error messages.",
+      fr: "Utilisé pour les diagnostics réseau et les messages d'erreur.",
+      ar: "يُستخدم لتشخيص الشبكة ورسائل الخطأ."
+    }
+  },
+  {
+  abbr: "LDAP",
+  port: 389,
+  type: "TCP",
+  name: {
+    en: "Lightweight Directory Access Protocol",
+    fr: "Protocole léger d'accès aux annuaires",
+    ar: "بروتوكول الوصول الخفيف للدليل"
+  },
+  desc: {
+    en: "Used for accessing and maintaining distributed directory information services.",
+    fr: "Utilisé pour accéder et maintenir les services d'annuaire distribués.",
+    ar: "يُستخدم للوصول والحفاظ على خدمات الدليل الموزعة."
+  }
+},
+{
+  abbr: "LDAPS",
+  port: 636,
+  type: "TCP",
+  name: {
+    en: "LDAP over SSL",
+    fr: "LDAP sur SSL",
+    ar: "LDAP عبر SSL"
+  },
+  desc: {
+    en: "Secure version of LDAP using SSL/TLS.",
+    fr: "Version sécurisée de LDAP utilisant SSL/TLS.",
+    ar: "نسخة آمنة من LDAP باستخدام SSL/TLS."
+  }
+},
+{
+  abbr: "SMB",
+  port: 445,
+  type: "TCP",
+  name: {
+    en: "Server Message Block",
+    fr: "Bloc de messages serveur",
+    ar: "كتلة رسائل الخادم"
+  },
+  desc: {
+    en: "Used for providing shared access to files and printers.",
+    fr: "Utilisé pour fournir un accès partagé aux fichiers et imprimantes.",
+    ar: "يُستخدم لتوفير الوصول المشترك إلى الملفات والطابعات."
+  }
+},
+{
+  abbr: "RDP",
+  port: 3389,
+  type: "TCP",
+  name: {
+    en: "Remote Desktop Protocol",
+    fr: "Protocole de bureau à distance",
+    ar: "بروتوكول سطح المكتب البعيد"
+  },
+  desc: {
+    en: "Used for remote desktop connections to Windows machines.",
+    fr: "Utilisé pour les connexions de bureau à distance vers des machines Windows.",
+    ar: "يُستخدم للاتصال بسطح المكتب البعيد لأجهزة ويندوز."
+  }
+},
+{
+  abbr: "SIP",
+  port: 5060,
+  type: "UDP",
+  name: {
+    en: "Session Initiation Protocol",
+    fr: "Protocole d'initiation de session",
+    ar: "بروتوكول بدء الجلسة"
+  },
+  desc: {
+    en: "Used for signaling and controlling multimedia communication sessions.",
+    fr: "Utilisé pour le signalement et le contrôle des sessions de communication multimédia.",
+    ar: "يُستخدم للإشارة والتحكم في جلسات الاتصال متعددة الوسائط."
+  }
+},
+{
+  abbr: "DHCP",
+  port: 67,
+  type: "UDP",
+  name: {
+    en: "Dynamic Host Configuration Protocol",
+    fr: "Protocole de configuration dynamique des hôtes",
+    ar: "بروتوكول التهيئة الديناميكية للمضيف"
+  },
+  desc: {
+    en: "Used for dynamic IP address allocation.",
+    fr: "Utilisé pour l'allocation dynamique des adresses IP.",
+    ar: "يُستخدم لتخصيص عناوين IP ديناميكياً."
+  }
+},
+{
+  abbr: "LDAP",
+  port: 636,
+  type: "TCP",
+  name: {
+    en: "LDAP over SSL",
+    fr: "LDAP sur SSL",
+    ar: "LDAP عبر SSL"
+  },
+  desc: {
+    en: "Secure LDAP using SSL encryption.",
+    fr: "LDAP sécurisé utilisant le chiffrement SSL.",
+    ar: "LDAP آمن باستخدام تشفير SSL."
+  }
+},
+{
+  abbr: "Syslog",
+  port: 514,
+  type: "UDP",
+  name: {
+    en: "System Logging Protocol",
+    fr: "Protocole de journalisation système",
+    ar: "بروتوكول تسجيل النظام"
+  },
+  desc: {
+    en: "Used for sending system log or event messages.",
+    fr: "Utilisé pour envoyer des messages de journal ou d'événements système.",
+    ar: "يُستخدم لإرسال رسائل سجل النظام أو الأحداث."
+  }
+},
+{
+  abbr: "SNTP",
+  port: 123,
+  type: "UDP",
+  name: {
+    en: "Simple Network Time Protocol",
+    fr: "Protocole simple de temps réseau",
+    ar: "بروتوكول وقت الشبكة البسيط"
+  },
+  desc: {
+    en: "Simplified version of NTP for clock synchronization.",
+    fr: "Version simplifiée de NTP pour la synchronisation de l'horloge.",
+    ar: "نسخة مبسطة من NTP لمزامنة الوقت."
+  }
+},
+{
+  abbr: "BGP",
+  port: 179,
+  type: "TCP",
+  name: {
+    en: "Border Gateway Protocol",
+    fr: "Protocole de passerelle de bordure",
+    ar: "بروتوكول بوابة الحدود"
+  },
+  desc: {
+    en: "Used for routing between autonomous systems on the internet.",
+    fr: "Utilisé pour le routage entre systèmes autonomes sur internet.",
+    ar: "يُستخدم للتوجيه بين الأنظمة المستقلة على الإنترنت."
+  }
+},
+{
+    abbr: "MPLS",
+    port: 0,
+    type: "TCP",
+    name: {
+      en: "Multiprotocol Label Switching",
+      fr: "Commutation multiprotocole par étiquette",
+      ar: "تبديل متعدد البروتوكولات بواسطة التسمية"
+    },
+    desc: {
+      en: "Used for routing and traffic engineering in ISP networks.",
+      fr: "Utilisé pour le routage et l'ingénierie du trafic dans les réseaux ISP.",
+      ar: "كيستعمل ف التوجيه وهندسة المرور ف شبكات ISP."
+    }
+  },
+   {
+    "abbr": "TCP",
+    "port": 0,
+    "type": "Transport",
+    "name": {
+      "en": "Transmission Control Protocol",
+      "fr": "Protocole de contrôle de transmission",
+      "ar": "بروتوكول التحكم في الإرسال"
+    },
+    "desc": {
+      "en": "Reliable connection-oriented protocol for data transmission.",
+      "fr": "Protocole fiable orienté connexion pour la transmission des données.",
+      "ar": "بروتوكول موثوق مع اتصال لنقل البيانات."
+    }
+  },
+  {
+    "abbr": "UDP",
+    "port": 0,
+    "type": "Transport",
+    "name": {
+      "en": "User Datagram Protocol",
+      "fr": "Protocole de datagramme utilisateur",
+      "ar": "بروتوكول مخطط بيانات المستخدم"
+    },
+    "desc": {
+      "en": "Connectionless protocol, faster but less reliable.",
+      "fr": "Protocole sans connexion, plus rapide mais moins fiable.",
+      "ar": "بروتوكول بدون اتصال، أسرع لكن أقل موثوقية."
+    }
+  },
+   {
+    "abbr": "MQTT",
+    "port": 1883,
+    "type": "Application",
+    "name": {
+      "en": "Message Queuing Telemetry Transport",
+      "fr": "Transport télémétrique de files de messages",
+      "ar": "بروتوكول نقل رسائل الطابور"
+    },
+    "desc": {
+      "en": "Lightweight messaging protocol for IoT devices.",
+      "fr": "Protocole de messagerie léger pour les appareils IoT.",
+      "ar": "بروتوكول رسائل خفيف للأجهزة المتصلة بالإنترنت."
+    }
+  },
+  {
+    "abbr": "ARP",
+    "port": 0,
+    "type": "Network",
+    "name": {
+      "en": "Address Resolution Protocol",
+      "fr": "Protocole de résolution d'adresse",
+      "ar": "بروتوكول حل العنوان"
+    },
+    "desc": {
+      "en": "Maps IP addresses to physical MAC addresses.",
+      "fr": "Associe les adresses IP aux adresses MAC physiques.",
+      "ar": "يربط عناوين IP بعناوين MAC الفيزيائية."
+    }
+  },
+  {
+    "abbr": "RARP",
+    "port": 0,
+    "type": "Network",
+    "name": {
+      "en": "Reverse Address Resolution Protocol",
+      "fr": "Protocole inverse de résolution d'adresse",
+      "ar": "بروتوكول حل العنوان العكسي"
+    },
+    "desc": {
+      "en": "Maps physical MAC addresses to IP addresses.",
+      "fr": "Associe les adresses MAC physiques aux adresses IP.",
+      "ar": "يربط عناوين MAC الفيزيائية بعناوين IP."
+    }
+  },
+  {
+    "abbr": "EIGRP",
+    "port": 0,
+    "type": "Routing",
+    "name": {
+      "en": "Enhanced Interior Gateway Routing Protocol",
+      "fr": "Protocole de routage de passerelle intérieure amélioré",
+      "ar": "بروتوكول توجيه بوابة داخلية محسّن"
+    },
+    "desc": {
+      "en": "Cisco proprietary routing protocol for efficient routing within an autonomous system.",
+      "fr": "Protocole de routage propriétaire Cisco pour un routage efficace au sein d'un système autonome.",
+      "ar": "بروتوكول توجيه مملوك لشركة Cisco لتوجيه فعال داخل نظام مستقل."
+    }
+  },
+  {
+    "abbr": "OSPF",
+    "port": 0,
+    "type": "Routing",
+    "name": {
+      "en": "Open Shortest Path First",
+      "fr": "Premier chemin le plus court ouvert",
+      "ar": "أول أقصر مسار مفتوح"
+    },
+    "desc": {
+      "en": "Link-state routing protocol used for Internet Protocol networks.",
+      "fr": "Protocole de routage à état de lien utilisé pour les réseaux IP.",
+      "ar": "بروتوكول توجيه حالة الرابط المستخدم لشبكات بروتوكول الإنترنت."
+    }
+  },
+   {
+    "abbr": "IPsec",
+    "port": 0,
+    "type": "Security",
+    "name": {
+      "en": "Internet Protocol Security",
+      "fr": "Sécurité du protocole Internet",
+      "ar": "أمن بروتوكول الإنترنت"
+    },
+    "desc": {
+      "en": "Protocol suite for securing IP communications by authenticating and encrypting each IP packet.",
+      "fr": "Suite de protocoles pour sécuriser les communications IP en authentifiant et chiffrant chaque paquet IP.",
+      "ar": "مجموعة بروتوكولات لتأمين اتصالات IP عن طريق المصادقة وتشفير كل حزمة IP."
+    }
+  },
+  {
+    "abbr": "GRE",
+    "port": 0,
+    "type": "Tunneling",
+    "name": {
+      "en": "Generic Routing Encapsulation",
+      "fr": "Encapsulation générique de routage",
+      "ar": "تغليف التوجيه العام"
+    },
+    "desc": {
+      "en": "Protocol to encapsulate a wide variety of network layer protocols inside virtual point-to-point links.",
+      "fr": "Protocole pour encapsuler une grande variété de protocoles de couche réseau dans des liens point à point virtuels.",
+      "ar": "بروتوكول لتغليف مجموعة متنوعة من بروتوكولات طبقة الشبكة داخل روابط نقطة إلى نقطة افتراضية."
+    }
+  },
+  {
+    "abbr": "SFTP",
+    "port": 22,
+    "type": "Application",
+    "name": {
+      "en": "SSH File Transfer Protocol",
+      "fr": "Protocole de transfert de fichiers SSH",
+      "ar": "بروتوكول نقل الملفات عبر SSH"
+    },
+    "desc": {
+      "en": "Secure file transfer protocol over SSH.",
+      "fr": "Protocole sécurisé de transfert de fichiers via SSH.",
+      "ar": "بروتوكول نقل ملفات آمن عبر SSH."
+    }
+  },
+  {
+    "abbr": "SMB",
+    "port": 445,
+    "type": "Application",
+    "name": {
+      "en": "Server Message Block",
+      "fr": "Bloc de message serveur",
+      "ar": "كتلة رسالة الخادم"
+    },
+    "desc": {
+      "en": "Protocol for sharing files, printers, and other resources on a network.",
+      "fr": "Protocole pour partager des fichiers, imprimantes et autres ressources sur un réseau.",
+      "ar": "بروتوكول لمشاركة الملفات والطابعات والموارد الأخرى على الشبكة."
+    }
+  },
+  {
+    "abbr": "NFS",
+    "port": 2049,
+    "type": "Application",
+    "name": {
+      "en": "Network File System",
+      "fr": "Système de fichiers réseau",
+      "ar": "نظام الملفات الشبكي"
+    },
+    "desc": {
+      "en": "Protocol for distributed file systems allowing remote access to files.",
+      "fr": "Protocole pour systèmes de fichiers distribués permettant l'accès distant aux fichiers.",
+      "ar": "بروتوكول لأنظمة الملفات الموزعة يسمح بالوصول عن بعد إلى الملفات."
+    }
+  },
+  {
+    "abbr": "SNTP",
+    "port": 123,
+    "type": "UDP",
+    "name": {
+      "en": "Simple Network Time Protocol",
+      "fr": "Protocole simple de temps réseau",
+      "ar": "بروتوكول الوقت البسيط للشبكة"
+    },
+    "desc": {
+      "en": "Simplified version of NTP for time synchronization.",
+      "fr": "Version simplifiée de NTP pour la synchronisation de l'heure.",
+      "ar": "نسخة مبسطة من NTP لمزامنة الوقت."
+    }
+  },
+  {
+    "abbr": "MSSQL",
+    "port": 1433,
+    "type": "Application",
+    "name": {
+      "en": "Microsoft SQL Server",
+      "fr": "Serveur SQL Microsoft",
+      "ar": "خادم SQL مايكروسوفت"
+    },
+    "desc": {
+      "en": "Protocol used by Microsoft SQL Server database system.",
+      "fr": "Protocole utilisé par le système de base de données Microsoft SQL Server.",
+      "ar": "بروتوكول يستخدمه نظام قاعدة بيانات Microsoft SQL Server."
+    }
+  },
+  {
+    "abbr": "MySQL",
+    "port": 3306,
+    "type": "Application",
+    "name": {
+      "en": "MySQL Database System",
+      "fr": "Système de base de données MySQL",
+      "ar": "نظام قاعدة بيانات MySQL"
+    },
+    "desc": {
+      "en": "Protocol used by MySQL database server.",
+      "fr": "Protocole utilisé par le serveur de base de données MySQL.",
+      "ar": "بروتوكول يستخدمه خادم قاعدة بيانات MySQL."
+    }
+  },
+   
+  {
+    "abbr": "GTP",
+    "port": 2123,
+    "type": "UDP",
+    "name": {
+      "en": "GPRS Tunneling Protocol",
+      "fr": "Protocole de tunneling GPRS",
+      "ar": "بروتوكول نفق GPRS"
+    },
+    "desc": {
+      "en": "Used in mobile networks for carrying user data and signaling between core network nodes.",
+      "fr": "Utilisé dans les réseaux mobiles pour transporter les données utilisateur et la signalisation entre les nœuds du réseau central.",
+      "ar": "يستخدم في شبكات المحمول لحمل بيانات المستخدم والإشارات بين عقد الشبكة الأساسية."
+    }
+  },
+  {
+    "abbr": "L2TP",
+    "port": 1701,
+    "type": "UDP",
+    "name": {
+      "en": "Layer 2 Tunneling Protocol",
+      "fr": "Protocole de tunneling de couche 2",
+      "ar": "بروتوكول نفق الطبقة الثانية"
+    },
+    "desc": {
+      "en": "Used to support VPNs by tunneling data between two points.",
+      "fr": "Utilisé pour supporter les VPN en tunnelant les données entre deux points.",
+      "ar": "يستخدم لدعم الشبكات الخاصة الافتراضية (VPN) عن طريق إنشاء نفق بين نقطتين."
+    }
+  },
+  {
+    "abbr": "FTPS",
+    "port": 990,
+    "type": "TCP",
+    "name": {
+      "en": "FTP Secure",
+      "fr": "FTP sécurisé",
+      "ar": "إف تي بي الآمن"
+    },
+    "desc": {
+      "en": "Secure extension to FTP using SSL/TLS for encryption.",
+      "fr": "Extension sécurisée de FTP utilisant SSL/TLS pour le chiffrement.",
+      "ar": "امتداد آمن لبروتوكول FTP يستخدم تشفير SSL/TLS."
+    }
+  },
+  {
+    "abbr": "RADIUS",
+    "port": 1812,
+    "type": "UDP",
+    "name": {
+      "en": "Remote Authentication Dial-In User Service",
+      "fr": "Service d'authentification distante par ligne téléphonique",
+      "ar": "خدمة التوثيق عن بعد للمستخدمين"
+    },
+    "desc": {
+      "en": "Protocol for remote authentication and accounting.",
+      "fr": "Protocole pour l'authentification et la comptabilité à distance.",
+      "ar": "بروتوكول للمصادقة المح遠ة والمحاسبة."
+    }
+  },
+  {
+    "abbr": "Kerberos",
+    "port": 88,
+    "type": "UDP/TCP",
+    "name": {
+      "en": "Kerberos Authentication Protocol",
+      "fr": "Protocole d'authentification Kerberos",
+      "ar": "بروتوكول المصادقة كيربيروس"
+    },
+    "desc": {
+      "en": "Network authentication protocol using tickets to allow nodes to prove their identity.",
+      "fr": "Protocole d'authentification réseau utilisant des tickets pour permettre aux nœuds de prouver leur identité.",
+      "ar": "بروتوكول مصادقة شبكي يستخدم تذاكر للسماح للعقد بإثبات هويتها."
+    }
+  },
+  {
+    "abbr": "Syslog",
+    "port": 514,
+    "type": "UDP",
+    "name": {
+      "en": "System Logging Protocol",
+      "fr": "Protocole de journalisation système",
+      "ar": "بروتوكول تسجيل النظام"
+    },
+    "desc": {
+      "en": "Protocol for sending log messages over a network.",
+      "fr": "Protocole pour l'envoi de messages journaux sur un réseau.",
+      "ar": "بروتوكول لإرسال رسائل السجل عبر الشبكة."
+    }
+  },
+  {
+    "abbr": "TACACS+",
+    "port": 49,
+    "type": "TCP",
+    "name": {
+      "en": "Terminal Access Controller Access-Control System Plus",
+      "fr": "Système de contrôle d'accès TACACS+",
+      "ar": "نظام التحكم بالوصول TACACS+"
+    },
+    "desc": {
+      "en": "Authentication protocol used for network devices.",
+      "fr": "Protocole d'authentification utilisé pour les équipements réseau.",
+      "ar": "بروتوكول مصادقة يُستخدم لأجهزة الشبكة."
+    }
+  },
+  {
+    "abbr": "CoAP",
+    "port": 5683,
+    "type": "UDP",
+    "name": {
+      "en": "Constrained Application Protocol",
+      "fr": "Protocole d'application contraint",
+      "ar": "بروتوكول التطبيقات المقيدة"
+    },
+    "desc": {
+      "en": "Web transfer protocol for use with constrained nodes and networks (IoT).",
+      "fr": "Protocole de transfert web pour nœuds et réseaux contraints (IoT).",
+      "ar": "بروتوكول نقل ويب للاستخدام مع العقد والشبكات المقيدة (إنترنت الأشياء)."
+    }
+  },
+  {
+    "abbr": "RDP",
+    "port": 3389,
+    "type": "TCP",
+    "name": {
+      "en": "Remote Desktop Protocol",
+      "fr": "Protocole de bureau à distance",
+      "ar": "بروتوكول سطح المكتب البعيد"
+    },
+    "desc": {
+      "en": "Protocol for remote desktop access to Windows computers.",
+      "fr": "Protocole d'accès à distance aux ordinateurs Windows.",
+      "ar": "بروتوكول للوصول عن بعد إلى أجهزة كمبيوتر ويندوز."
+    }
+  },
+  {
+    "abbr": "IMAPS",
+    "port": 993,
+    "type": "TCP",
+    "name": {
+      "en": "Internet Message Access Protocol Secure",
+      "fr": "Protocole d'accès aux messages Internet sécurisé",
+      "ar": "بروتوكول الوصول الآمن لبريد الإنترنت"
+    },
+    "desc": {
+      "en": "Secure version of IMAP using SSL/TLS encryption.",
+      "fr": "Version sécurisée d'IMAP utilisant le chiffrement SSL/TLS.",
+      "ar": "نسخة آمنة من IMAP تستخدم تشفير SSL/TLS."
+    }
+  },
+  {
+    "abbr": "POP3S",
+    "port": 995,
+    "type": "TCP",
+    "name": {
+      "en": "Post Office Protocol 3 Secure",
+      "fr": "Protocole de bureau de poste 3 sécurisé",
+      "ar": "بروتوكول مكتب البريد 3 الآمن"
+    },
+    "desc": {
+      "en": "Secure version of POP3 using SSL/TLS encryption.",
+      "fr": "Version sécurisée de POP3 utilisant le chiffrement SSL/TLS.",
+      "ar": "نسخة آمنة من POP3 تستخدم تشفير SSL/TLS."
+    }
+  },
+  {
+    "abbr": "NFS",
+    "port": 2049,
+    "type": "TCP/UDP",
+    "name": {
+      "en": "Network File System",
+      "fr": "Système de fichiers en réseau",
+      "ar": "نظام الملفات الشبكي"
+    },
+    "desc": {
+      "en": "Protocol for distributed file systems allowing remote file access.",
+      "fr": "Protocole pour les systèmes de fichiers distribués permettant l'accès à distance aux fichiers.",
+      "ar": "بروتوكول لأنظمة الملفات الموزعة يسمح بالوصول عن بعد إلى الملفات."
+    }
+  },
+  {
+    "abbr": "SNMP Trap",
+    "port": 162,
+    "type": "UDP",
+    "name": {
+      "en": "Simple Network Management Protocol Trap",
+      "fr": "Trap du protocole de gestion de réseau simple",
+      "ar": "مصيدة بروتوكول إدارة الشبكة البسيط"
+    },
+    "desc": {
+      "en": "Used for sending asynchronous notifications from SNMP agents to managers.",
+      "fr": "Utilisé pour envoyer des notifications asynchrones des agents SNMP aux gestionnaires.",
+      "ar": "تُستخدم لإرسال الإشعارات غير المتزامنة من وكلاء SNMP إلى المديرين."
+    }
+  },
+  {
+    "abbr": "Zigbee",
+    "port": 0,
+    "type": "Wireless",
+    "name": {
+      "en": "Zigbee Protocol",
+      "fr": "Protocole Zigbee",
+      "ar": "بروتوكول Zigbee"
+    },
+    "desc": {
+      "en": "Wireless protocol for low-power, low-data-rate communication in IoT.",
+      "fr": "Protocole sans fil pour communication basse consommation et faible débit dans l'IoT.",
+      "ar": "بروتوكول لاسلكي للاتصالات منخفضة الطاقة ومنخفضة معدل البيانات في إنترنت الأشياء."
+    }
+  },
+  {
+    "abbr": "H.323",
+    "port": 1720,
+    "type": "TCP",
+    "name": {
+      "en": "H.323 Protocol",
+      "fr": "Protocole H.323",
+      "ar": "بروتوكول H.323"
+    },
+    "desc": {
+      "en": "Protocol for VoIP and multimedia communication over IP networks.",
+      "fr": "Protocole pour VoIP et communication multimédia sur réseaux IP.",
+      "ar": "بروتوكول للصوت عبر الإنترنت والاتصالات متعددة الوسائط على شبكات IP."
+    }
+  },
+  {
+    "abbr": "MIME",
+    "port": 0,
+    "type": "Application",
+    "name": {
+      "en": "Multipurpose Internet Mail Extensions",
+      "fr": "Extensions de courrier Internet polyvalentes",
+      "ar": "امتدادات البريد الإلكتروني متعددة الأغراض"
+    },
+    "desc": {
+      "en": "Internet standard for formatting non-text email content.",
+      "fr": "Norme Internet pour le formatage des contenus email non textuels.",
+      "ar": "المعيار الإنترنتي لتنسيق محتوى البريد الإلكتروني غير النصي."
+    }
+  },
+  {
+    "abbr": "TACACS",
+    "port": 49,
+    "type": "TCP",
+    "name": {
+      "en": "Terminal Access Controller Access Control System",
+      "fr": "Système de contrôle d'accès du terminal",
+      "ar": "نظام التحكم في الوصول إلى وحدة التحكم الطرفية"
+    },
+    "desc": {
+      "en": "Authentication protocol similar to RADIUS but proprietary to Cisco.",
+      "fr": "Protocole d'authentification similaire à RADIUS mais propriétaire de Cisco.",
+      "ar": "بروتوكول مصادقة مشابه لـ RADIUS ولكنه مملوك لشركة Cisco."
+    }
+  },
+  {
+    "abbr": "RTSP",
+    "port": 554,
+    "type": "TCP/UDP",
+    "name": {
+      "en": "Real Time Streaming Protocol",
+      "fr": "Protocole de streaming en temps réel",
+      "ar": "بروتوكول البث المباشر"
+    },
+    "desc": {
+      "en": "Protocol for controlling streaming media servers.",
+      "fr": "Protocole pour contrôler les serveurs de streaming média.",
+      "ar": "بروتوكول للتحكم في خوادم البث المباشر."
+    }
+  },
+  {
+    "abbr": "LDP",
+    "port": 646,
+    "type": "TCP",
+    "name": {
+      "en": "Label Distribution Protocol",
+      "fr": "Protocole de distribution d'étiquettes",
+      "ar": "بروتوكول توزيع العلامات"
+    },
+    "desc": {
+      "en": "Protocol for distributing labels in MPLS networks.",
+      "fr": "Protocole pour distribuer des étiquettes dans les réseaux MPLS.",
+      "ar": "بروتوكول لتوزيع العلامات في شبكات MPLS."
+    }
+  },
+  {
+    "abbr": "IGMP",
+    "port": 0,
+    "type": "ICMP",
+    "name": {
+      "en": "Internet Group Management Protocol",
+      "fr": "Protocole de gestion de groupes Internet",
+      "ar": "بروتوكول إدارة مجموعة الإنترنت"
+    },
+    "desc": {
+      "en": "Protocol used by IP hosts to report multicast group memberships.",
+      "fr": "Protocole utilisé par les hôtes IP pour rapporter l'appartenance aux groupes multicast.",
+      "ar": "بروتوكول يستخدمه مضيفو IP للإبلاغ عن عضويات مجموعات البث المتعدد."
+    }
+  },
+      {
+        abbr: "FTP",
+        port: 21,
+        type: "TCP",
+        name: {
+          en: "File Transfer Protocol",
+          fr: "Protocole de transfert de fichiers",
+          ar: "بروتوكول نقل الملفات"
+        },
+        desc: {
+          en: "Standard protocol for transferring files between clients and servers.",
+          fr: "Protocole standard pour transférer des fichiers entre clients et serveurs.",
+          ar: "بروتوكول قياسي لنقل الملفات بين العملاء والخوادم."
+        }
+      },
+      {
+        abbr: "SMTP",
+        port: 25,
+        type: "TCP",
+        name: {
+          en: "Simple Mail Transfer Protocol",
+          fr: "Protocole simple de transfert de courrier",
+          ar: "بروتوكول نقل البريد البسيط"
+        },
+        desc: {
+          en: "Used for sending emails.",
+          fr: "Utilisé pour l'envoi d'emails.",
+          ar: "يُستخدم لإرسال البريد الإلكتروني."
+        }
+      },
+      {
+        abbr: "POP3",
+        port: 110,
+        type: "TCP",
+        name: {
+          en: "Post Office Protocol v3",
+          fr: "Protocole de bureau de poste v3",
+          ar: "بروتوكول مكتب البريد الإصدار 3"
+        },
+        desc: {
+          en: "Used for retrieving emails.",
+          fr: "Utilisé pour récupérer les emails.",
+          ar: "يُستخدم لاسترجاع البريد الإلكتروني."
+        }
+      },
+      {
+        abbr: "IMAP",
+        port: 143,
+        type: "TCP",
+        name: {
+          en: "Internet Message Access Protocol",
+          fr: "Protocole d'accès aux messages Internet",
+          ar: "بروتوكول الوصول إلى رسائل الإنترنت"
+        },
+        desc: {
+          en: "Used for accessing emails.",
+          fr: "Utilisé pour accéder aux emails.",
+          ar: "يُستخدم للوصول إلى البريد الإلكتروني."
+        }
+      },
+      {
+        abbr: "DHCP",
+        port: 67,
+        type: "UDP",
+        name: {
+          en: "Dynamic Host Configuration Protocol",
+          fr: "Protocole de configuration dynamique des hôtes",
+          ar: "بروتوكول التهيئة الآلية للمضيفين"
+        },
+        desc: {
+          en: "Automatically assigns IP addresses to network devices.",
+          fr: "Attribue automatiquement des adresses IP aux appareils réseau.",
+          ar: "يقوم تلقائيًا بتعيين عناوين IP لأجهزة الشبكة."
+        }
+      },
+      {
+        abbr: "SNMP",
+        port: 161,
+        type: "UDP",
+        name: {
+          en: "Simple Network Management Protocol",
+          fr: "Protocole simple de gestion de réseau",
+          ar: "بروتوكول إدارة الشبكة البسيط"
+        },
+        desc: {
+          en: "Used for network management.",
+          fr: "Utilisé pour la gestion du réseau.",
+          ar: "يُستخدم لإدارة الشبكة."
+        }
+      },
+      {
+        abbr: "ICMP",
+        port: 0,
+        type: "ICMP",
+        name: {
+          en: "Internet Control Message Protocol",
+          fr: "Protocole de message de contrôle Internet",
+          ar: "بروتوكول رسالة التحكم بالإنترنت"
+        },
+        desc: {
+          en: "Used for error messages and diagnostics (e.g., ping).",
+          fr: "Utilisé pour les messages d'erreur et le diagnostic (ex: ping).",
+          ar: "يُستخدم لرسائل الخطأ والتشخيص (مثل ping)."
+        }
+      },
+      {
+        abbr: "TCP",
+        port: 0,
+        type: "Transport",
+        name: {
+          en: "Transmission Control Protocol",
+          fr: "Protocole de contrôle de transmission",
+          ar: "بروتوكول التحكم في الإرسال"
+        },
+        desc: {
+          en: "Reliable connection-oriented protocol for data transmission.",
+          fr: "Protocole fiable orienté connexion pour la transmission des données.",
+          ar: "بروتوكول موثوق مع اتصال لنقل البيانات."
+        }
+      },
+      {
+        abbr: "UDP",
+        port: 0,
+        type: "Transport",
+        name: {
+          en: "User Datagram Protocol",
+          fr: "Protocole de datagramme utilisateur",
+          ar: "بروتوكول مخطط بيانات المستخدم"
+        },
+        desc: {
+          en: "Connectionless protocol, faster but less reliable.",
+          fr: "Protocole sans connexion, plus rapide mais moins fiable.",
+          ar: "بروتوكول بدون اتصال، أسرع لكن أقل موثوقية."
+        }
+      },
+      {
+        abbr: "RDP",
+        port: 3389,
+        type: "TCP",
+        name: {
+          en: "Remote Desktop Protocol",
+          fr: "Protocole de bureau à distance",
+          ar: "بروتوكول سطح المكتب البعيد"
+        },
+        desc: {
+          en: "Protocol for remote desktop access to Windows computers.",
+          fr: "Protocole d'accès à distance aux ordinateurs Windows.",
+          ar: "بروتوكول للوصول عن بعد إلى أجهزة كمبيوتر ويندوز."
+        }
+      },
+      {
+        abbr: "IPsec",
+        port: 0,
+        type: "Security",
+        name: {
+          en: "Internet Protocol Security",
+          fr: "Sécurité du protocole Internet",
+          ar: "أمن بروتوكول الإنترنت"
+        },
+        desc: {
+          en: "Protocol suite for securing IP communications by authenticating and encrypting each IP packet.",
+          fr: "Suite de protocoles pour sécuriser les communications IP en authentifiant et chiffrant chaque paquet IP.",
+          ar: "مجموعة بروتوكولات لتأمين اتصالات IP عن طريق المصادقة وتشفير كل حزمة IP."
+        }
+      },
+      {
+        abbr: "BGP",
+        port: 179,
+        type: "TCP",
+        name: {
+          en: "Border Gateway Protocol",
+          fr: "Protocole de passerelle de bordure",
+          ar: "بروتوكول بوابة الحدود"
+        },
+        desc: {
+          en: "Used for routing between autonomous systems on the internet.",
+          fr: "Utilisé pour le routage entre systèmes autonomes sur internet.",
+          ar: "يُستخدم للتوجيه بين الأنظمة المستقلة على الإنترنت."
+        }
+      },
+      {
+        abbr: "OSPF",
+        port: 0,
+        type: "Routing",
+        name: {
+          en: "Open Shortest Path First",
+          fr: "Premier chemin le plus court ouvert",
+          ar: "أول أقصر مسار مفتوح"
+        },
+        desc: {
+          en: "Link-state routing protocol used for Internet Protocol networks.",
+          fr: "Protocole de routage à état de lien utilisé pour les réseaux IP.",
+          ar: "بروتوكول توجيه حالة الرابط المستخدم لشبكات بروتوكول الإنترنت."
+        }
+      },
+      {
+        abbr: "QUIC",
+        port: 443,
+        type: "UDP",
+        name: {
+          en: "Quick UDP Internet Connections",
+          fr: "Connexions Internet UDP rapides",
+          ar: "اتصالات الإنترنت السريعة عبر UDP"
+        },
+        desc: {
+          en: "A transport protocol designed by Google to reduce latency compared to TCP.",
+          fr: "Protocole de transport conçu par Google pour réduire la latence par rapport à TCP.",
+          ar: "بروتوكول نقل صممته جوجل لتقليل الكمون مقارنة بـ TCP."
+        }
+      },
+	  {
+    "abbr": "MPLS",
+    "port": 0,
+    "type": "TCP",
+    "name": {
+      "en": "Multiprotocol Label Switching",
+      "fr": "Commutation par étiquettes multiprotocole",
+      "ar": "تبديل التسمية متعددة البروتوكولات"
+    },
+    "desc": {
+      "en": "Technique for routing network packets using labels instead of long addresses.",
+      "fr": "Technique de routage utilisant des étiquettes au lieu de longues adresses.",
+      "ar": "تقنية توجيه حزم الشبكة باستخدام التسميات بدل العناوين الطويلة."
+    }
+  },
+  {
+    "abbr": "IS-IS",
+    "port": 0,
+    "type": "TCP",
+    "name": {
+      "en": "Intermediate System to Intermediate System",
+      "fr": "Système intermédiaire à système intermédiaire",
+      "ar": "النظام الوسيط إلى النظام الوسيط"
+    },
+    "desc": {
+      "en": "Routing protocol designed for use within an ISP's network.",
+      "fr": "Protocole de routage conçu pour une utilisation au sein d'un réseau ISP.",
+      "ar": "بروتوكول توجيه مصمم للاستخدام داخل شبكة مزود خدمة الإنترنت."
+    }
+  },
+  {
+    "abbr": "DNP3",
+    "port": 20000,
+    "type": "TCP/UDP",
+    "name": {
+      "en": "Distributed Network Protocol",
+      "fr": "Protocole réseau distribué",
+      "ar": "بروتوكول الشبكة الموزعة"
+    },
+    "desc": {
+      "en": "Protocol used in utilities like electric and water companies for SCADA systems.",
+      "fr": "Protocole utilisé dans les utilités comme l'électricité et l'eau pour les systèmes SCADA.",
+      "ar": "بروتوكول يستخدم في شركات الكهرباء والمياه لأنظمة SCADA."
+    }
+  },
+  {
+    "abbr": "SCTP",
+    "port": 9899,
+    "type": "Transport",
+    "name": {
+      "en": "Stream Control Transmission Protocol",
+      "fr": "Protocole de contrôle de transmission par flux",
+      "ar": "بروتوكول التحكم في تدفق النقل"
+    },
+    "desc": {
+      "en": "Multi-streaming transport protocol supporting multi-homing for telephony and signaling.",
+      "fr": "Protocole de transport multi-flux supportant le multi-hébergement pour la téléphonie et la signalisation.",
+      "ar": "بروتوكول نقل يدعم تدفقات متعددة والاتصال عبر عدة مسارات للاتصالات الهاتفية والإشارات."
+    }
+  },
+  {
+    "abbr": "DDNS",
+    "port": 53,
+    "type": "Application",
+    "name": {
+      "en": "Dynamic Domain Name System",
+      "fr": "Système de noms de domaine dynamique",
+      "ar": "نظام أسماء النطاقات الديناميكي"
+    },
+    "desc": {
+      "en": "Automatically updates DNS records when IP addresses change dynamically.",
+      "fr": "Met automatiquement à jour les enregistrements DNS lorsque les adresses IP changent dynamiquement.",
+      "ar": "يحدث سجلات DNS تلقائياً عندما تتغير عناوين IP ديناميكياً."
+    }
+  },
+  {
+    "abbr": "FCoE",
+    "port": null,
+    "type": "Data Link / Storage",
+    "name": {
+      "en": "Fibre Channel over Ethernet",
+      "fr": "Fibre Channel sur Ethernet",
+      "ar": "قناة الألياف عبر الإيثرنت"
+    },
+    "desc": {
+      "en": "Transports Fibre Channel frames over Ethernet networks for storage area networks.",
+      "fr": "Transporte les trames Fibre Channel sur les réseaux Ethernet pour les réseaux de stockage.",
+      "ar": "ينقل إطارات قناة الألياف عبر شبكات إيثرنت لشبكات التخزين."
+    }
+  },
+  {
+    "abbr": "L2TPv3",
+    "port": 1701,
+    "type": "Tunneling",
+    "name": {
+      "en": "Layer 2 Tunneling Protocol Version 3",
+      "fr": "Protocole de tunneling de couche 2 version 3",
+      "ar": "بروتوكول النفق الطبقة الثانية الإصدار 3"
+    },
+    "desc": {
+      "en": "Tunneling of Layer 2 frames for VPN and carrier networks.",
+      "fr": "Tunneling des trames de couche 2 pour VPN et réseaux opérateurs.",
+      "ar": "نفق إطارات الطبقة الثانية للشبكات الافتراضية وشبكات المشغل."
+    }
+  },
+  {
+    "abbr": "VXLAN",
+    "port": 4789,
+    "type": "UDP",
+    "name": {
+      "en": "Virtual Extensible LAN",
+      "fr": "Réseau local virtuel extensible",
+      "ar": "الشبكة المحلية الافتراضية الموسعة"
+    },
+    "desc": {
+      "en": "Encapsulation protocol to extend Layer 2 networks over Layer 3.",
+      "fr": "Protocole d'encapsulation pour étendre les réseaux de couche 2 sur couche 3.",
+      "ar": "بروتوكول تغليف لتوسيع شبكات الطبقة الثانية عبر الطبقة الثالثة."
+    }
+  },
+  {
+    "abbr": "PPTP",
+    "port": 1723,
+    "type": "TCP",
+    "name": {
+      "en": "Point-to-Point Tunneling Protocol",
+      "fr": "Protocole de tunneling point à point",
+      "ar": "بروتوكول النفق نقطة إلى نقطة"
+    },
+    "desc": {
+      "en": "Legacy VPN tunneling protocol, less secure but historically important.",
+      "fr": "Protocole VPN ancien, moins sécurisé mais historiquement important.",
+      "ar": "بروتوكول نفق VPN قديم، أقل أمانًا لكنه مهم تاريخياً."
+    }
+  },
+  {
+    "abbr": "SPDY",
+    "port": 443,
+    "type": "TCP",
+    "name": {
+      "en": "SPDY Protocol",
+      "fr": "Protocole SPDY",
+      "ar": "بروتوكول SPDY"
+    },
+    "desc": {
+      "en": "Google’s experimental protocol to speed up HTTP traffic, predecessor to HTTP/2.",
+      "fr": "Protocole expérimental de Google pour accélérer le trafic HTTP, prédécesseur de HTTP/2.",
+      "ar": "بروتوكول تجريبي من جوجل لتسريع حركة HTTP، سابق HTTP/2."
+    }
+  },
+  {
+    "abbr": "HTTP/2",
+    "port": 443,
+    "type": "TCP",
+    "name": {
+      "en": "HyperText Transfer Protocol Version 2",
+      "fr": "Protocole de transfert hypertexte version 2",
+      "ar": "بروتوكول نقل النص التشعبي الإصدار 2"
+    },
+    "desc": {
+      "en": "Modern HTTP with multiplexing streams for better performance.",
+      "fr": "HTTP moderne avec multiplexage des flux pour de meilleures performances.",
+      "ar": "HTTP حديث مع تعدد تدفقات لتحسين الأداء."
+    }
+  },
+  {
+    "abbr": "AMQP",
+    "port": 5672,
+    "type": "TCP",
+    "name": {
+      "en": "Advanced Message Queuing Protocol",
+      "fr": "Protocole avancé de file d'attente de messages",
+      "ar": "بروتوكول قائمة انتظار الرسائل المتقدم"
+    },
+    "desc": {
+      "en": "Protocol for message-oriented middleware for reliable communication between applications.",
+      "fr": "Protocole pour middleware orienté messages pour communication fiable entre applications.",
+      "ar": "بروتوكول للرسائل الوسيطة للاتصال الموثوق بين التطبيقات."
+    }
+  },
+  {
+    "abbr": "XMPP",
+    "port": 5222,
+    "type": "TCP",
+    "name": {
+      "en": "Extensible Messaging and Presence Protocol",
+      "fr": "Protocole extensible de messagerie et de présence",
+      "ar": "بروتوكول المراسلة والحضور القابل للتوسيع"
+    },
+    "desc": {
+      "en": "Protocol for instant messaging and presence information.",
+      "fr": "Protocole pour messagerie instantanée et informations de présence.",
+      "ar": "بروتوكول للمراسلة الفورية ومعلومات الحضور."
+    }
+  },
+  {
+    "abbr": "Z-Wave",
+    "port": null,
+    "type": "Wireless",
+    "name": {
+      "en": "Z-Wave Protocol",
+      "fr": "Protocole Z-Wave",
+      "ar": "بروتوكول Z-Wave"
+    },
+    "desc": {
+      "en": "Wireless protocol for home automation devices.",
+      "fr": "Protocole sans fil pour les appareils domotiques.",
+      "ar": "بروتوكول لاسلكي لأجهزة أتمتة المنزل."
+    }
+  },
+  {
+    "abbr": "CoAP+DTLS",
+    "port": null,
+    "type": "Security/IoT",
+    "name": {
+      "en": "Constrained Application Protocol over Datagram TLS",
+      "fr": "Protocole d'application contraint sur Datagram TLS",
+      "ar": "بروتوكول التطبيقات المقيدة عبر Datagram TLS"
+    },
+    "desc": {
+      "en": "Secure version of CoAP for IoT using Datagram Transport Layer Security.",
+      "fr": "Version sécurisée de CoAP pour IoT utilisant Datagram Transport Layer Security.",
+      "ar": "نسخة مؤمنة من CoAP لأجهزة إنترنت الأشياء باستخدام أمان طبقة النقل للبيانات."
+    }
+  },
+  {
+    "abbr": "GSM MAP",
+    "port": null,
+    "type": "Mobile Telecom",
+    "name": {
+      "en": "Mobile Application Part",
+      "fr": "Partie application mobile",
+      "ar": "جزء التطبيقات المحمولة"
+    },
+    "desc": {
+      "en": "Protocol in mobile networks for call control, SMS, and roaming.",
+      "fr": "Protocole dans les réseaux mobiles pour le contrôle des appels, SMS et itinérance.",
+      "ar": "بروتوكول في شبكات المحمول للتحكم بالمكالمات، الرسائل والتجوال."
+    }
+  },
+  {
+    "abbr": "SMPP",
+    "port": 2775,
+    "type": "TCP",
+    "name": {
+      "en": "Short Message Peer-to-Peer Protocol",
+      "fr": "Protocole pair à pair de messages courts",
+      "ar": "بروتوكول الرسائل القصيرة نظير إلى نظير"
+    },
+    "desc": {
+      "en": "Protocol for exchanging SMS messages between SMS entities.",
+      "fr": "Protocole pour échanger des messages SMS entre entités SMS.",
+      "ar": "بروتوكول لتبادل رسائل SMS بين الكيانات."
+    }
+  },
+  {
+    "abbr": "IGRP",
+    "port": null,
+    "type": "Routing",
+    "name": {
+      "en": "Interior Gateway Routing Protocol",
+      "fr": "Protocole de routage de passerelle intérieure",
+      "ar": "بروتوكول توجيه البوابة الداخلية"
+    },
+    "desc": {
+      "en": "Cisco proprietary interior routing protocol, predecessor of EIGRP.",
+      "fr": "Protocole de routage intérieur propriétaire de Cisco, prédécesseur d'EIGRP.",
+      "ar": "بروتوكول توجيه داخلي مملوك لشركة Cisco، سابق EIGRP."
+    }
+  },
+  {
+    "abbr": "RDP UDP",
+    "port": 3389,
+    "type": "UDP",
+    "name": {
+      "en": "Remote Desktop Protocol over UDP",
+      "fr": "Protocole de bureau à distance sur UDP",
+      "ar": "بروتوكول سطح المكتب البعيد عبر UDP"
+    },
+    "desc": {
+      "en": "Improved RDP performance using UDP for better responsiveness.",
+      "fr": "Meilleure performance RDP utilisant UDP pour plus de réactivité.",
+      "ar": "تحسين أداء RDP باستخدام UDP لزيادة الاستجابة."
+    }
+  },
+      {
+        abbr: "MQTT",
+        port: 1883,
+        type: "TCP",
+        name: {
+          en: "Message Queuing Telemetry Transport",
+          fr: "Transport télémétrique de files de messages",
+          ar: "بروتوكول نقل رسائل الطابور"
+        },
+        desc: {
+          en: "Lightweight messaging protocol for IoT devices.",
+          fr: "Protocole de messagerie léger pour les appareils IoT.",
+          ar: "بروتوكول رسائل خفيف للأجهزة المتصلة بالإنترنت."
+        }
+      }
+    ];
+
+    // DOM elements
+    const langSelect = document.getElementById("lang");
+    const searchInput = document.getElementById("search");
+    const filterSelect = document.getElementById("filter");
+    const sortSelect = document.getElementById("sort");
+    const countDisplay = document.getElementById("count");
+    const grid = document.getElementById("protocolGrid");
+
+    // Initial render
+    renderProtocols();
+
+    // Event listeners
+    langSelect.addEventListener("change", renderProtocols);
+    searchInput.addEventListener("input", renderProtocols);
+    filterSelect.addEventListener("change", renderProtocols);
+    sortSelect.addEventListener("change", renderProtocols);
+
+    function renderProtocols() {
+      const lang = langSelect.value;
+      const searchTerm = searchInput.value.toLowerCase();
+      const filterValue = filterSelect.value;
+      
+      // Filter protocols
+      let filtered = protocols.filter(protocol => {
+        const matchesSearch = 
+          protocol.abbr.toLowerCase().includes(searchTerm) ||
+          protocol.port.toString().includes(searchTerm) ||
+          protocol.name[lang].toLowerCase().includes(searchTerm) ||
+          protocol.desc[lang].toLowerCase().includes(searchTerm);
+        
+        const matchesFilter = 
+          filterValue === "all" || 
+          protocol.type === filterValue ||
+          (filterValue === "Security" && protocol.type.toLowerCase().includes("security")) ||
+          (filterValue === "Routing" && protocol.type.toLowerCase().includes("routing"));
+        
+        return matchesSearch && matchesFilter;
+      });
+
+      // Sort protocols
+      const sortValue = sortSelect.value;
+      filtered.sort((a, b) => {
+        switch(sortValue) {
+          case "name-asc": return a.name[lang].localeCompare(b.name[lang]);
+          case "name-desc": return b.name[lang].localeCompare(a.name[lang]);
+          case "port-asc": return a.port - b.port;
+          case "port-desc": return b.port - a.port;
+          default: return 0;
+        }
+      });
+
+      // Display count
+      countDisplay.textContent = `Showing ${filtered.length} of ${protocols.length} protocols`;
+
+      // Render protocol cards
+      grid.innerHTML = "";
+      filtered.forEach(protocol => {
+        const card = document.createElement("div");
+        card.className = "protocol-card";
+        
+        card.innerHTML = `
+          <div class="protocol-header">
+            <div class="protocol-abbr">${protocol.abbr}</div>
+            <div class="protocol-port">${protocol.port || 'N/A'}</div>
+          </div>
+          <div class="protocol-type">${protocol.type}</div>
+          <div class="protocol-name">${protocol.name[lang]}</div>
+          <div class="protocol-desc">${protocol.desc[lang]}</div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
