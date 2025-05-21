@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <meta charset="UTF-8">
+  
   <title>Network Protocols Reference</title>
   <style>
     body {
@@ -239,6 +240,12 @@
 <button id="labPtBtn" title="Afficher Labs Packet Tracer">
   <i class="fas fa-network-wired"></i> Lab Packet Tracer
 </button>
+<button class="myIconButton" title="Lab Example" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe_8S8Kf6PBoslj_WGSdhdQHoICAuT379A-iS3DLmR7ifxvpQ/viewform?usp=dialog', '_blank')">
+  <i class="fas fa-flask"></i> QUIZ
+</button>
+
+
+</a>
 
 <div id="labPtList" style="display:none; margin-top: 10px;">
   <ul style="list-style:none; padding:0;">
@@ -284,7 +291,7 @@
 
 <style>
   #labPtBtn {
-    background-color: #28a745; /* Vert */
+    background-color: #996522; /* Vert */
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -296,7 +303,7 @@
   }
 
   #labPtBtn:hover {
-    background-color: #1e7e34;
+    background-color:  #b8731a;
   }
 
   #labPtList ul li a {
@@ -311,9 +318,24 @@
     display: inline-block;
     margin-bottom: 8px;
   }
+.myIconButton {
+  background-color: #996522;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.myIconButton:hover {
+  background-color: #b8731a;
+}
 
   #labPtList ul li a:hover {
-    background-color: #28a745;
+    background-color: #cbcf17;
     color: white;
   }
 </style>
